@@ -20,7 +20,7 @@
   <img src="https://img.shields.io/github/license/Sfrui/ai-code-review-agent" alt="License" />
 </p>
 
-<a href="https://sfrui.cloud" target="_blank">
+<a href="https://www.sfrui.cloud" target="_blank">
   <img src="https://img.shields.io/badge/-Live%20Demo-00C853?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
 </a>
 
@@ -60,9 +60,11 @@
 
 <div align="center">
 
-![Preview](https://via.placeholder.com/800x400/1a1a2e/eee?text=AI+Code+Review+Screenshot)
+[![Preview](https://www.sfrui.cloud/og-image.png)](https://www.sfrui.cloud)
 
 _粘贴代码 → 一键分析 → 获得专业审查报告_
+
+**👉 [点击体验完整功能](https://www.sfrui.cloud) 👈**
 
 </div>
 
