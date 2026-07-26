@@ -1,16 +1,12 @@
 import api from './index';
-import type {
-  ReviewTask,
-  ReviewTaskListItem,
-  PaginatedData,
-} from '@ai-review/shared';
+import type { ReviewTask, ReviewTaskListItem, PaginatedData } from '@ai-review/shared';
 
 // ============================================================
 // Review API — 审查任务相关接口
 // ============================================================
 
 /** 通用 API 响应结构 */
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   success: boolean;
   data: T;
   timestamp: string;

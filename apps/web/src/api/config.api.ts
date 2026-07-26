@@ -24,7 +24,7 @@ export interface ProviderOption {
 }
 
 /** 通用 API 响应 */
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   success: boolean;
   data: T;
   timestamp: string;
