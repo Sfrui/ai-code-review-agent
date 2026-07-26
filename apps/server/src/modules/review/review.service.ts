@@ -4,8 +4,8 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import type { ReviewTaskRepository } from '../database/repositories/review-task.repository';
-import type { CodeReviewAgentService } from '../ai/ai.service';
+import { ReviewTaskRepository } from '../database/repositories/review-task.repository';
+import { CodeReviewAgentService } from '../ai/ai.service';
 import type { CreateReviewTaskDto } from './dto/create-review-task.dto';
 import type { PaginationDto } from './dto/pagination.dto';
 import type { ReviewTask, ReviewTaskListItem } from '@ai-review/shared';

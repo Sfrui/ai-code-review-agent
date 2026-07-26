@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import { LLMFactory } from './llm/llm.factory';
-import type { ConfigService } from '../config/config.service';
+import { ConfigService } from '../config/config.service';
 import { validateLLMOutput, type LLMReviewOutput } from './schemas/llm-output.schema';
 import {
   CODE_REVIEW_SYSTEM_PROMPT,

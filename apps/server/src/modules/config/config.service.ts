@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import type { LLMConfigRepository } from '../database/repositories/llm-config.repository';
+import { LLMConfigRepository } from '../database/repositories/llm-config.repository';
 
 // ============================================================
 // ConfigService — LLM 配置业务逻辑
