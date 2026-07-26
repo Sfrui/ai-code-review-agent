@@ -3,6 +3,10 @@
 <!-- 动态标题 -->
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=3776AB&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=100&lines=%F0%9F%A4%96+AI+Code+Review+Agent;Intelligent+Code+Review+Powered+by+LLM" alt="Typing SVG" />
 
+<p align="center">
+  <em>🤖 AI 驱动的智能代码审查工具 — 粘贴代码，自动检测缺陷、安全漏洞和性能问题</em>
+</p>
+
 <!-- 项目简介 -->
 <p>
   <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=white" alt="React" />
@@ -22,6 +26,11 @@
 
 <a href="https://www.sfrui.cloud" target="_blank">
   <img src="https://img.shields.io/badge/-Live%20Demo-00C853?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+</a>
+
+<!-- 网站截图预览 -->
+<a href="https://www.sfrui.cloud" target="_blank">
+  <img src="https://www.sfrui.cloud/preview.png" alt="Website Preview" width="700" />
 </a>
 
 </div>
@@ -60,11 +69,17 @@
 
 <div align="center">
 
-[![Preview](https://www.sfrui.cloud/og-image.png)](https://www.sfrui.cloud)
+<a href="https://www.sfrui.cloud" target="_blank">
+  <img src="https://www.sfrui.cloud/preview.png" alt="AI Code Review Agent Preview" width="800" />
+</a>
+
+<br/>
+
+<a href="https://www.sfrui.cloud" target="_blank">
+  <img src="https://img.shields.io/badge/-🚀_立即体验-00C853?style=for-the-badge&logo=vercel&logoColor=white" alt="Try Now" />
+</a>
 
 _粘贴代码 → 一键分析 → 获得专业审查报告_
-
-**👉 [点击体验完整功能](https://www.sfrui.cloud) 👈**
 
 </div>
 
