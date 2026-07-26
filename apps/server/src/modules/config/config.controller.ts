@@ -1,5 +1,5 @@
 import { Controller, Get, Put, Body, Logger } from '@nestjs/common';
-import type { ConfigService } from './config.service';
+import { ConfigService } from './config.service';
 import type { SaveLLMConfigDto } from './dto/save-llm-config.dto';
 
 // ============================================================
@@ -38,7 +38,9 @@ export class ConfigController {
   async saveLLMConfig(@Body() dto: SaveLLMConfigDto) {
     try {
       this.logger.log(`PUT /config/llm: provider=${dto.provider}, model=${dto.model}`);
-      this.logger.log(`DTO received: ${JSON.stringify({ ...dto, apiKey: dto.apiKey ? '***' : '' })}`);
+      this.logger.log(
+        `DTO received: ${JSON.stringify({ ...dto, apiKey: dto.apiKey ? '***' : '' })}`,
+      );
       const config = await this.configService.saveLLMConfig(dto);
       this.logger.log('Config saved successfully');
       return { success: true, data: config };

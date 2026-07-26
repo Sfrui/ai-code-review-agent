@@ -9,7 +9,7 @@ import {
   HttpStatus,
   BadRequestException,
 } from '@nestjs/common';
-import type { ReviewService } from './review.service';
+import { ReviewService } from './review.service';
 import type { CreateReviewTaskDto } from './dto/create-review-task.dto';
 import type { PaginationDto } from './dto/pagination.dto';
 
