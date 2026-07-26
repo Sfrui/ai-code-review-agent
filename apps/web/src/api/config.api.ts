@@ -1,5 +1,5 @@
 import api from './index';
-import type { LLMProviderName } from '@ai-review/shared';
+import type { LLMProvider } from '@ai-review/shared';
 
 // ============================================================
 // Config API — LLM 配置管理接口
@@ -18,7 +18,7 @@ export interface LLMSettings {
 
 /** 提供商选项 */
 export interface ProviderOption {
-  value: LLMProviderName;
+  value: LLMProvider;
   name: string;
   defaultModel: string;
 }

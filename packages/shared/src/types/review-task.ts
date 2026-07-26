@@ -1,4 +1,5 @@
 import type { ReviewStatus } from './enums';
+import type { ReviewIssue } from './review-issue';
 
 // ============================================================
 // 审查任务类型
@@ -26,24 +27,6 @@ export interface ReviewResult {
   readonly issues: readonly ReviewIssue[];
   /** 使用的模型 */
   readonly modelUsed: string;
-}
-
-/** 审查问题 */
-export interface ReviewIssue {
-  /** 唯一标识 */
-  readonly id: string;
-  /** 所在文件 */
-  readonly file: string;
-  /** 行号 */
-  readonly line: number;
-  /** 严重等级 */
-  readonly severity: 'error' | 'warning' | 'info';
-  /** 问题分类 */
-  readonly category: 'bug' | 'security' | 'performance' | 'style' | 'maintainability';
-  /** 问题描述 */
-  readonly message: string;
-  /** 修复建议 */
-  readonly suggestion?: string;
 }
 
 /** 审查任务 */
