@@ -1,0 +1,42 @@
+{
+  "name": "@ai-review/server",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "nest build",
+    "dev": "nest start --watch",
+    "start": "node dist/main",
+    "start:prod": "node dist/main",
+    "lint": "eslint .",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ai-review/shared": "workspace:*",
+    "@langchain/anthropic": "^0.3.14",
+    "@langchain/core": "^0.3.28",
+    "@langchain/openai": "^0.3.17",
+    "@nestjs/common": "^10.4.15",
+    "@nestjs/config": "^3.3.0",
+    "@nestjs/core": "^10.4.15",
+    "@nestjs/mongoose": "^10.1.0",
+    "@nestjs/platform-express": "^10.4.15",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "langchain": "^0.3.14",
+    "mongoose": "^8.9.5",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.4.9",
+    "@nestjs/schematics": "^10.2.3",
+    "@nestjs/testing": "^10.4.15",
+    "@swc/cli": "^0.8.1",
+    "@swc/core": "^1.15.46",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.10.5",
+    "swc-loader": "^0.2.7",
+    "typescript": "^5.7.3"
+  }
+}

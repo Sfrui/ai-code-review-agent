@@ -1,0 +1,35 @@
+# ============================================================
+# 生产环境 Docker Compose
+# 前端: Vercel (静态部署)
+# 后端: Docker (Node.js)
+# 数据库: MongoDB Atlas (云数据库) 或本地 MongoDB
+# ============================================================
+
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    ports:
+      - '${PORT:-3000}:3000'
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=${MONGODB_URI}
+      - LLM_PROVIDER=${LLM_PROVIDER}
+      - LLM_API_KEY=${LLM_API_KEY}
+      - LLM_MODEL=${LLM_MODEL}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    restart: unless-stopped
+
+  # 可选：本地 MongoDB（开发环境使用）
+  # mongodb:
+  #   image: mongo:7
+  #   ports:
+  #     - '27017:27017'
+  #   volumes:
+  #     - mongodb_data:/data/db
+
+# volumes:
+#   mongodb_data:
