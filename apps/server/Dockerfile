@@ -41,8 +41,8 @@ COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
 COPY packages/shared/package.json ./packages/shared/
 COPY apps/server/package.json ./apps/server/
 
-# 安装生产依赖
-RUN pnpm install --frozen-lockfile --prod
+# 安装生产依赖（跳过 prepare 脚本，husky 仅开发需要）
+RUN pnpm install --frozen-lockfile --prod --ignore-scripts
 
 # 复制构建产物
 COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
