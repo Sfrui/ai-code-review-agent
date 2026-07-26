@@ -1,214 +1,248 @@
-# AI Code Review Agent
+<div align="center">
 
-> 🤖 AI 驱动的智能代码审查工具 — 粘贴代码，自动检测缺陷、安全漏洞和性能问题
+<!-- 动态标题 -->
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=3776AB&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=100&lines=%F0%9F%A4%96+AI+Code+Review+Agent;Intelligent+Code+Review+Powered+by+LLM" alt="Typing SVG" />
 
-🔗 **在线体验**: [https://sfrui.cloud](https://sfrui.cloud)
+<!-- 项目简介 -->
+<p>
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=white" alt="React" />
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white" alt="NestJS" />
+  <img src="https://img.shields.io/badge/LangChain.js-FF6B35?style=flat&logo=chainlink&logoColor=white" alt="LangChain" />
+  <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript" />
+</p>
+
+<p>
+  <img src="https://img.shields.io/github/stars/Sfrui/ai-code-review-agent?style=social" alt="Stars" />
+  <img src="https://img.shields.io/github/forks/Sfrui/ai-code-review-agent?style=social" alt="Forks" />
+  <img src="https://img.shields.io/github/issues/Sfrui/ai-code-review-agent" alt="Issues" />
+  <img src="https://img.shields.io/github/license/Sfrui/ai-code-review-agent" alt="License" />
+</p>
+
+<a href="https://sfrui.cloud" target="_blank">
+  <img src="https://img.shields.io/badge/-Live%20Demo-00C853?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+</a>
+
+</div>
 
 ---
 
-## ✨ 功能特性
+## :sparkles: 项目亮点
 
-- 🔍 **多维度代码审查** — 缺陷检测、安全审计、性能分析、代码规范
-- 🎯 **AI 驱动** — 支持 OpenAI / Anthropic / DeepSeek / 国内主流大模型
-- 📊 **结构化输出** — Zod 强校验，确保 AI 返回可信数据
-- 🎨 **现代 UI** — React + TailwindCSS + 暗黑模式
-- 📝 **代码编辑器** — Monaco Editor（VS Code 同款）
-- 🔄 **实时进度** — 轮询显示审查进度
-- 📜 **历史记录** — 持久化存储所有审查结果
-- 🌐 **一键部署** — Docker Compose 部署，开箱即用
+<table>
+  <tr>
+    <td width="50%" valign="top">
 
-## 🏗️ 架构说明
+### :mag: 多维度代码审查
+
+- 🐛 **缺陷检测** — 空指针、类型错误、逻辑漏洞
+- 🔒 **安全审计** — SQL注入、XSS、敏感信息泄露
+- ⚡ **性能分析** — 复杂度过高、内存泄漏、N+1查询
+- 📏 **代码规范** — 命名规范、重复代码、复杂度过高
+
+    </td>
+    <td width="50%" valign="top">
+
+### :brain: AI 驱动
+
+- 🌐 支持 **OpenAI / Anthropic / DeepSeek** 等主流模型
+- 📊 **Zod 强校验** — 确保 AI 返回可信结构化数据
+- 🔄 **智能重试** — 失败自动重试，提高成功率
+- ⚙️ **在线配置** — 网页端即可切换模型和参数
+
+    </td>
+  </tr>
+
+</table>
+
+## :camera: 效果预览
+
+<div align="center">
+
+![Preview](https://via.placeholder.com/800x400/1a1a2e/eee?text=AI+Code+Review+Screenshot)
+
+_粘贴代码 → 一键分析 → 获得专业审查报告_
+
+</div>
+
+## :hammer_and_wrench: 技术架构
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      Frontend (React)                        │
-│  Vite + React 18 + TypeScript + Zustand + React-Query       │
-│  TailwindCSS + Monaco Editor                                │
-└───────────────────────┬─────────────────────────────────────┘
-                        │ HTTP + SSE
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      Backend (NestJS)                        │
-│  ┌──────────┐  ┌──────────┐  ┌──────────────────────────┐  │
-│  │ Review   │  │ AI       │  │ Database                 │  │
-│  │ Module   │→ │ Agent    │→ │ (Mongoose + MongoDB)     │  │
-│  │          │  │ Service  │  │                          │  │
-│  └──────────┘  └──────────┘  └──────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    AI Layer (LangChain.js)                   │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
-│  │ Prompt       │  │ LLM Factory  │  │ Zod Schema       │  │
-│  │ Templates    │→ │ (OpenAI/     │→ │ Validation       │  │
-│  │              │  │  Claude)     │  │                  │  │
-│  └──────────────┘  └──────────────┘  └──────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                        Frontend (React)                          │
+│   Vite + React 18 + TypeScript + Zustand + TailwindCSS          │
+│   ┌─────────────┐ ┌─────────────┐ ┌─────────────────────────┐   │
+│   │ Monaco      │ │ React-Query │ │ Zustand                 │   │
+│   │ Editor      │ │ (Data)      │ │ (State)                 │   │
+│   └─────────────┘ └─────────────┘ └─────────────────────────┘   │
+└───────────────────────────┬─────────────────────────────────────┘
+                            │ HTTP + REST API
+                            ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        Backend (NestJS)                          │
+│   ┌───────────┐  ┌────────────┐  ┌─────────────────────────┐   │
+│   │ Config    │→ │ AI Agent   │→ │ MongoDB                 │   │
+│   │ Module    │  │ Service    │  │ (Mongoose)              │   │
+│   └───────────┘  └────────────┘  └─────────────────────────┘   │
+│                       │                                         │
+│                       ▼                                         │
+│   ┌─────────────────────────────────────────────────────────┐   │
+│   │              LangChain.js + Zod Schema                  │   │
+│   └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    AI Provider Layer                             │
+│   ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐         │
+│   │ OpenAI   │ │ Claude   │ │ DeepSeek │ │  自定义   │         │
+│   └──────────┘ └──────────┘ └──────────┘ └──────────┘         │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-## 🛠️ 技术栈
-
-| 层级         | 技术                                                               |
-| ------------ | ------------------------------------------------------------------ |
-| **前端**     | React 18 + Vite + TypeScript + Zustand + React-Query + TailwindCSS |
-| **后端**     | NestJS + TypeScript + LangChain.js                                 |
-| **数据库**   | MongoDB + Mongoose                                                 |
-| **AI**       | OpenAI / Anthropic / DeepSeek + Zod 强校验                         |
-| **代码编辑** | Monaco Editor                                                      |
-| **代码规范** | ESLint + Prettier + Husky + Commitlint                             |
-| **部署**     | Docker + Nginx + Let's Encrypt SSL                                 |
-
-## 🚀 快速开始
+## :rocket: 快速开始
 
 ### 环境要求
 
-- Node.js >= 18
-- pnpm >= 9
-- MongoDB >= 6（本地或 Atlas）
-- LLM API Key（OpenAI / Anthropic / DeepSeek 等）
+| 环境    | 版本  |
+| ------- | ----- |
+| Node.js | >= 18 |
+| pnpm    | >= 9  |
+| MongoDB | >= 6  |
 
-### 1. 克隆项目
+### 本地开发
 
 ```bash
+# 1. 克隆项目
 git clone https://github.com/Sfrui/ai-code-review-agent.git
 cd ai-code-review-agent
-```
 
-### 2. 安装依赖
-
-```bash
+# 2. 安装依赖
 pnpm install
-```
 
-### 3. 配置环境变量
-
-```bash
+# 3. 配置环境变量
 cp .env.example apps/server/.env
-```
+# 编辑 apps/server/.env，填入 LLM_API_KEY
 
-编辑 `apps/server/.env`，填入 LLM API Key（也可在网页端配置）：
-
-```bash
-LLM_API_KEY=sk-your-api-key-here
-LLM_PROVIDER=openai          # openai | anthropic | deepseek
-LLM_MODEL=gpt-4o
-MONGODB_URI=mongodb://localhost:27017/ai-code-review
-PORT=3000
-```
-
-### 4. 启动开发服务器
-
-```bash
-# 同时启动前端和后端
+# 4. 启动开发服务器
 pnpm dev
-
-# 或分别启动
-pnpm dev:web      # → http://localhost:5173
-pnpm dev:server   # → http://localhost:3000
 ```
 
-## 📦 项目结构
+访问 http://localhost:5173 开始使用 :tada:
 
-```
-ai-code-review-agent/
-├── packages/shared/          # 共享类型、常量、Zod Schema
-├── apps/
-│   ├── server/               # NestJS 后端
-│   │   └── src/
-│   │       ├── modules/
-│   │       │   ├── ai/       # AI Agent 模块
-│   │       │   ├── review/   # 审查任务模块
-│   │       │   ├── config/   # LLM 配置模块
-│   │       │   └── database/ # 数据库模块
-│   │       └── common/       # 过滤器、拦截器
-│   └── web/                  # React 前端
-│       └── src/
-│           ├── pages/        # 页面组件
-│           ├── components/   # UI 组件
-│           ├── api/          # API 封装
-│           ├── stores/       # Zustand 状态
-│           └── hooks/        # React-Query hooks
-├── .github/workflows/        # CI 配置
-└── docs/                     # 文档
-```
-
-## 🚢 部署
-
-### Docker 一键部署（推荐）
+### Docker 部署
 
 ```bash
-# 克隆代码
+# 一键部署
 git clone https://github.com/Sfrui/ai-code-review-agent.git
 cd ai-code-review-agent
-
-# 一键部署
 chmod +x server-deploy.sh
 ./server-deploy.sh
 ```
 
-### 配置 SSL 证书
+## :gear: 支持的 AI 模型
 
-```bash
-apt install certbot python3-certbot-nginx -y
-certbot --nginx -d your-domain.com -d www.your-domain.com
-```
+<div align="center">
 
-### 环境变量说明
+| 提供商                                                                                                             | 模型          | 状态 |
+| ------------------------------------------------------------------------------------------------------------------ | ------------- | ---- |
+| <img src="https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white" alt="OpenAI" />       | GPT-4o        | ✅   |
+| <img src="https://img.shields.io/badge/Anthropic-D4A574?style=flat&logo=anthropic&logoColor=white" alt="Claude" /> | Claude Sonnet | ✅   |
+| <img src="https://img.shields.io/badge/DeepSeek-0066FF?style=flat&logo=datacamp&logoColor=white" alt="DeepSeek" /> | DeepSeek Chat | ✅   |
+| <img src="https://img.shields.io/badge/Moonshot-1A1A2E?style=flat&logo=kotlin&logoColor=white" alt="Moonshot" />   | Kimi          | ✅   |
+| <img src="https://img.shields.io/badge/智谱GLM-4183C4?style=flat" alt="Zhipu" />                                   | GLM-4         | ✅   |
+| <img src="https://img.shields.io/badge/通义千问-FF6A00?style=flat" alt="Qwen" />                                   | Qwen Plus     | ✅   |
 
-| 变量名            | 必填 | 默认值                                     | 说明                             |
-| ----------------- | ---- | ------------------------------------------ | -------------------------------- |
-| `LLM_API_KEY`     | ✅   | -                                          | LLM API 密钥（也可在网页端配置） |
-| `LLM_PROVIDER`    | ❌   | `openai`                                   | LLM 提供商                       |
-| `LLM_MODEL`       | ❌   | `gpt-4o`                                   | 模型名称                         |
-| `LLM_TEMPERATURE` | ❌   | `0.1`                                      | 温度（0-2，越低越确定）          |
-| `LLM_MAX_TOKENS`  | ❌   | `4096`                                     | 最大 token 数                    |
-| `LLM_TIMEOUT`     | ❌   | `60000`                                    | 超时时间（毫秒）                 |
-| `MONGODB_URI`     | ❌   | `mongodb://localhost:27017/ai-code-review` | MongoDB 连接字符串               |
-| `PORT`            | ❌   | `3000`                                     | 后端端口                         |
-| `CORS_ORIGIN`     | ❌   | `http://localhost:5173`                    | 跨域来源                         |
+</div>
 
-## 📝 开发规范
+## :package: 项目结构
 
-### Commit 规范
-
-使用 [Conventional Commits](https://www.conventionalcommits.org/)：
+<details>
+<summary>点击展开项目结构</summary>
 
 ```
-feat:     新功能
-fix:      修复
-docs:     文档
-style:    格式
-refactor: 重构
-perf:     性能优化
-test:     测试
-chore:    杂项
+ai-code-review-agent/
+├── apps/
+│   ├── server/                    # NestJS 后端
+│   │   └── src/
+│   │       ├── modules/
+│   │       │   ├── ai/            # 🤖 AI Agent 模块
+│   │       │   ├── config/        # ⚙️ 配置模块
+│   │       │   ├── database/      # 🗄️ 数据库模块
+│   │       │   └── review/        # 📋 审查模块
+│   │       └── common/            # 🔧 通用工具
+│   └── web/                       # React 前端
+│       └── src/
+│           ├── pages/             # 📄 页面组件
+│           ├── components/        # 🧩 UI 组件
+│           ├── api/               # 🌐 API 封装
+│           ├── stores/            # 📦 状态管理
+│           └── hooks/             # 🪝 React Hooks
+├── packages/shared/               # 📚 共享类型和 Schema
+├── docker-compose.prod.yml        # 🐳 Docker 编排
+├── deploy.sh                      # 🚀 部署脚本
+└── README.md                      # 📖 项目说明
 ```
 
-### 代码规范
+</details>
 
-```bash
-pnpm lint          # 检查代码
-pnpm lint:fix      # 自动修复
-pnpm format        # 格式化代码
-```
+## :globe_with_meridians: 环境变量
 
-## 🔮 未来拓展
+| 变量名            |        必填        | 默认值                                     | 说明         |
+| ----------------- | :----------------: | ------------------------------------------ | ------------ |
+| `LLM_API_KEY`     | :white_check_mark: | -                                          | LLM API 密钥 |
+| `LLM_PROVIDER`    |                    | `openai`                                   | 提供商       |
+| `LLM_MODEL`       |                    | `gpt-4o`                                   | 模型名称     |
+| `LLM_TEMPERATURE` |                    | `0.1`                                      | 温度         |
+| `LLM_MAX_TOKENS`  |                    | `4096`                                     | 最大 token   |
+| `LLM_TIMEOUT`     |                    | `60000`                                    | 超时时间     |
+| `MONGODB_URI`     |                    | `mongodb://localhost:27017/ai-code-review` | MongoDB 地址 |
+| `PORT`            |                    | `3000`                                     | 服务端口     |
 
-- [ ] 用户认证系统（JWT / OAuth）
-- [ ] 多文件批量审查
-- [ ] 自定义审查规则
-- [ ] 审查结果导出（PDF / Markdown）
-- [ ] 团队协作功能
-- [ ] Webhook 通知
-- [ ] 集成 GitHub/GitLab PR 自动审查
+## :chart_with_upwards_trends: GitHub Stats
 
-## 📄 License
+<div align="center">
 
-MIT
+<img src="https://github-readme-stats.vercel.app/api?username=Sfrui&show_icons=true&theme=radical&hide_border=true" alt="GitHub Stats" />
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=Sfrui&theme=radical&hide_border=true" alt="Streak Stats" />
+
+</div>
+
+## :handshake: 贡献
+
+欢迎所有形式的贡献！
+
+1. Fork 本仓库
+2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的修改 (`git commit -m 'feat: Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 打开一个 Pull Request
+
+## :bookmark_tabs: 更新日志
+
+### [v0.1.0] - 2024-12-26
+
+#### :tada: 新增
+
+- 多维度代码审查（缺陷、安全、性能、规范）
+- 支持多种 AI 模型（OpenAI、Claude、DeepSeek 等）
+- Monaco Editor 代码编辑器
+- 实时审查进度显示
+- 历史记录持久化
+- Docker 一键部署
+- SSL 证书自动配置
+
+## :memo: License
+
+本项目采用 [MIT License](LICENSE) 开源协议
 
 ---
 
-<p align="center">
-  <sub>Built with ❤️ using React + NestJS + LangChain.js</sub>
-</p>
+<div align="center">
+
+**如果觉得有用，请给个 :star: 支持一下！**
+
+Made with :heart: by [Sfrui](https://github.com/Sfrui)
+
+</div>
