@@ -108,10 +108,7 @@ export class ReviewService {
         modelUsed: result.modelUsed,
       };
 
-      const updatedDoc = await this.reviewTaskRepo.updateReviewResult(
-        taskId,
-        reviewResultData,
-      );
+      const updatedDoc = await this.reviewTaskRepo.updateReviewResult(taskId, reviewResultData);
 
       this.logger.log(
         `Task ${taskId} completed: score=${result.data.score}, issues=${result.data.issues.length}`,
@@ -165,11 +162,7 @@ export class ReviewService {
           line: Number(issue['line'] ?? 0),
           severity: String(issue['severity'] ?? 'info') as 'error' | 'warning' | 'info',
           category: String(issue['category'] ?? 'style') as
-            | 'bug'
-            | 'security'
-            | 'performance'
-            | 'style'
-            | 'maintainability',
+            'bug' | 'security' | 'performance' | 'style' | 'maintainability',
           message: String(issue['message'] ?? ''),
           suggestion: issue['suggestion'] ? String(issue['suggestion']) : undefined,
         }))
@@ -192,9 +185,10 @@ export class ReviewService {
     completedAt: Date | null;
   }): ReviewTaskListItem {
     const rawResult = doc.reviewResult as Record<string, unknown> | null;
-    const issueCount = rawResult && Array.isArray(rawResult['issues'])
-      ? (rawResult['issues'] as unknown[]).length
-      : 0;
+    const issueCount =
+      rawResult && Array.isArray(rawResult['issues'])
+        ? (rawResult['issues'] as unknown[]).length
+        : 0;
 
     return {
       id: doc._id.toString(),

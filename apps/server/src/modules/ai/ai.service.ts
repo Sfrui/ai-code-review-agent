@@ -1,11 +1,8 @@
-import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import { LLMFactory } from './llm/llm.factory';
 import type { ConfigService } from '../config/config.service';
-import {
-  validateLLMOutput,
-  type LLMReviewOutput,
-} from './schemas/llm-output.schema';
+import { validateLLMOutput, type LLMReviewOutput } from './schemas/llm-output.schema';
 import {
   CODE_REVIEW_SYSTEM_PROMPT,
   buildCodeReviewUserPrompt,
@@ -121,10 +118,7 @@ export class CodeReviewAgentService {
   }
 
   /** 构建 LangChain 消息列表 */
-  private buildMessages(
-    params: { codeName: string; codeContent: string },
-    previousError?: string,
-  ) {
+  private buildMessages(params: { codeName: string; codeContent: string }, previousError?: string) {
     const messages = [new SystemMessage(CODE_REVIEW_SYSTEM_PROMPT)];
 
     if (previousError) {

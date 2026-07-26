@@ -8,7 +8,7 @@ import type { LLMConfigRepository } from '../database/repositories/llm-config.re
 export interface LLMSettingsResponse {
   provider: string;
   model: string;
-  apiKey: string;    // 脱敏后的 key
+  apiKey: string; // 脱敏后的 key
   baseURL: string;
   temperature: number;
   maxTokens: number;
