@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Body, Logger } from '@nestjs/common';
+import { Controller, Get, Put, Post, Body, Logger } from '@nestjs/common';
 import { ConfigService } from './config.service';
 import type { SaveLLMConfigDto } from './dto/save-llm-config.dto';
 
@@ -46,6 +46,22 @@ export class ConfigController {
       return { success: true, data: config };
     } catch (error) {
       this.logger.error(`PUT /config/llm failed: ${error}`);
+      throw error;
+    }
+  }
+
+  /**
+   * POST /api/v1/config/llm/test
+   * 测试 LLM 连接是否可用
+   */
+  @Post('llm/test')
+  async testLLMConnection(@Body() dto: SaveLLMConfigDto) {
+    try {
+      this.logger.log(`POST /config/llm/test: provider=${dto.provider}, model=${dto.model}`);
+      const result = await this.configService.testLLMConnection(dto);
+      return { success: result.success, data: result };
+    } catch (error) {
+      this.logger.error(`POST /config/llm/test failed: ${error}`);
       throw error;
     }
   }

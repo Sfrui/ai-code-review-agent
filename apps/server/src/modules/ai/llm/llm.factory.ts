@@ -11,13 +11,13 @@ export type LLMProviderName =
   | 'openai'
   | 'anthropic'
   | 'deepseek'
-  | 'moonshot'      // Kimi
-  | 'zhipu'         // 智谱 GLM
-  | 'qwen'          // 通义千问
-  | 'doubao'        // 豆包
-  | 'yi'            // 零一万物
-  | 'minimax'       // MiniMax
-  | 'ollama'        // 本地模型
+  | 'moonshot' // Kimi
+  | 'zhipu' // 智谱 GLM
+  | 'qwen' // 通义千问
+  | 'doubao' // 豆包
+  | 'yi' // 零一万物
+  | 'minimax' // MiniMax
+  | 'ollama' // 本地模型
   | 'openai-compat'; // 其他 OpenAI 兼容 API
 
 /** LLM 配置 */
@@ -137,7 +137,8 @@ export class LLMFactory {
     meta: ProviderMeta,
   ): Promise<BaseChatModel> {
     const { ChatOpenAI } = await import('@langchain/openai');
-    return new ChatOpenAI({
+    const timeout: number = config.timeout ?? 60_000;
+    const model: BaseChatModel = new ChatOpenAI({
       modelName: config.model || meta.defaultModel,
       apiKey: config.apiKey,
       configuration: {
@@ -145,8 +146,9 @@ export class LLMFactory {
       },
       temperature: config.temperature ?? 0.1,
       maxTokens: config.maxTokens ?? 4096,
-      timeout: config.timeout ?? 60_000,
-    });
+      timeout,
+    }) as BaseChatModel;
+    return model;
   }
 
   /** 创建 Anthropic Claude 模型 */
@@ -190,7 +192,15 @@ export class LLMFactory {
       );
     }
 
-    return { provider, model, apiKey: apiKey ?? 'ollama', baseURL, temperature, maxTokens, timeout };
+    return {
+      provider,
+      model,
+      apiKey: apiKey ?? 'ollama',
+      baseURL,
+      temperature,
+      maxTokens,
+      timeout,
+    };
   }
 
   /** 将数据库配置转为 LLMConfig */

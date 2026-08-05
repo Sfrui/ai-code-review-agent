@@ -22,8 +22,25 @@ export class ReviewResultSchema {
   modelUsed!: string;
 }
 
-export const ReviewResultSchemaClass =
-  SchemaFactory.createForClass(ReviewResultSchema);
+export const ReviewResultSchemaClass = SchemaFactory.createForClass(ReviewResultSchema);
+
+/** 对话消息子文档 */
+@Schema({ _id: false })
+export class ChatMessageSchema {
+  @Prop({ required: true, enum: ['user', 'assistant'] })
+  role!: 'user' | 'assistant';
+
+  @Prop({ required: true })
+  content!: string;
+
+  @Prop({ type: Date, default: Date.now })
+  createdAt!: Date;
+
+  @Prop({ type: Number, default: null })
+  relatedIssueIndex!: number | null;
+}
+
+export const ChatMessageSchemaClass = SchemaFactory.createForClass(ChatMessageSchema);
 
 /** ReviewTask 文档类型 */
 export type ReviewTaskDocument = HydratedDocument<ReviewTask>;
@@ -64,6 +81,10 @@ export class ReviewTask {
   /** 任务完成时间 */
   @Prop({ type: Date, default: null })
   completedAt: Date | null = null;
+
+  /** 对话历史（多轮追问） */
+  @Prop({ type: [ChatMessageSchemaClass], default: [] })
+  chatHistory: InstanceType<typeof ChatMessageSchema>[] = [];
 }
 
 export const ReviewTaskSchema = SchemaFactory.createForClass(ReviewTask);
