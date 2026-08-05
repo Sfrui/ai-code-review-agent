@@ -55,3 +55,15 @@ export function fetchProviderList(): ProviderOption[] {
     { value: 'openai-compat', name: '自定义 (OpenAI 兼容)', defaultModel: '' },
   ];
 }
+
+/** 测试 LLM 连接 */
+export function testLLMConfig(data: LLMSettings): Promise<
+  ApiResponse<{
+    success: boolean;
+    message: string;
+    modelUsed: string;
+    latencyMs: number;
+  }>
+> {
+  return api.post('/config/llm/test', data).then((res) => res.data);
+}

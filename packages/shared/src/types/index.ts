@@ -33,13 +33,11 @@ export type { CodeReviewResult, CodeReviewResultSummary } from './code-review-re
 
 // Diff
 export { DiffLineType } from './code-file-diff';
-export type {
-  DiffLine,
-  DiffHunk,
-  CodeFileDiff,
-  DiffFileStats,
-} from './code-file-diff';
+export type { DiffLine, DiffHunk, CodeFileDiff, DiffFileStats } from './code-file-diff';
 export type { DiffLineType as DiffLineTypeType } from './code-file-diff';
+
+// 对话
+export type { ChatMessage, ChatHistory, ChatRole } from './chat';
 
 // API 类型
 export type {

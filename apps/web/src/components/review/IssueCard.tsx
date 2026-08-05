@@ -1,5 +1,5 @@
 import { cn } from '@/lib/formatters';
-import { AlertTriangle, Shield, Zap, Code, Layers } from 'lucide-react';
+import { AlertTriangle, Shield, Zap, Code, Layers, MessageSquare } from 'lucide-react';
 
 // ============================================================
 // IssueCard — 单个审查问题卡片
@@ -15,6 +15,8 @@ interface IssueCardProps {
     fixedCode?: string;
   };
   index: number;
+  /** 追问回调（新增） */
+  onAskClick?: (issueIndex: number) => void;
 }
 
 const severityConfig = {
@@ -43,17 +45,14 @@ const categoryConfig = {
   maintainability: { label: '可维护性', icon: Layers },
 } as const;
 
-export function IssueCard({ issue, index }: IssueCardProps) {
+export function IssueCard({ issue, index, onAskClick }: IssueCardProps) {
   const severity = severityConfig[issue.severity];
   const category = categoryConfig[issue.category];
   const CategoryIcon = category.icon;
 
   return (
     <div
-      className={cn(
-        'card border-l-4 p-5 animate-slide-up',
-        severity.border,
-      )}
+      className={cn('card border-l-4 p-5 animate-slide-up', severity.border)}
       style={{ animationDelay: `${index * 50}ms` }}
     >
       {/* 头部：行号 + 徽章 */}
@@ -66,6 +65,16 @@ export function IssueCard({ issue, index }: IssueCardProps) {
           <CategoryIcon className="h-3.5 w-3.5" />
           {category.label}
         </span>
+        {/* 追问按钮（新增） */}
+        {onAskClick && (
+          <button
+            onClick={() => onAskClick(index)}
+            className="ml-auto inline-flex items-center gap-1 rounded-lg bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-600 transition-colors hover:bg-primary-100 dark:bg-primary-900/20 dark:text-primary-400 dark:hover:bg-primary-900/30"
+          >
+            <MessageSquare className="h-3 w-3" />
+            追问
+          </button>
+        )}
       </div>
 
       {/* 问题描述 */}
@@ -79,9 +88,7 @@ export function IssueCard({ issue, index }: IssueCardProps) {
           <p className="text-xs font-medium text-emerald-700 dark:text-emerald-400 mb-1">
             💡 修复建议
           </p>
-          <p className="text-sm text-emerald-800 dark:text-emerald-300">
-            {issue.suggestion}
-          </p>
+          <p className="text-sm text-emerald-800 dark:text-emerald-300">{issue.suggestion}</p>
         </div>
       )}
 

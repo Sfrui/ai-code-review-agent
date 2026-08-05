@@ -23,7 +23,7 @@ export interface ReviewIssue {
   /** 问题简述 */
   readonly message: string;
   /** 详细说明 */
-  readonly description: string;
+  readonly description?: string;
   /** 修复建议 */
   readonly suggestion?: string;
   /** 问题代码片段 */
@@ -33,7 +33,7 @@ export interface ReviewIssue {
   /** 规则标识 */
   readonly ruleId?: string;
   /** LLM 置信度 (0-1) */
-  readonly confidence: number;
+  readonly confidence?: number;
 }
 
 /** 审查问题统计 */

@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Settings, Save, Check, AlertCircle, Eye, EyeOff, ExternalLink } from 'lucide-react';
-import { fetchLLMConfig, saveLLMConfig, fetchProviderList, type LLMSettings } from '@/api/config.api';
+import { Settings, Save, Check, AlertCircle, Eye, EyeOff, ExternalLink, Cable } from 'lucide-react';
+import {
+  fetchLLMConfig,
+  saveLLMConfig,
+  fetchProviderList,
+  testLLMConfig,
+  type LLMSettings,
+} from '@/api/config.api';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 
 // ============================================================
@@ -27,6 +33,14 @@ export function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showApiKey, setShowApiKey] = useState(false);
+
+  // 测试连接状态
+  const [testing, setTesting] = useState(false);
+  const [testResult, setTestResult] = useState<{
+    success: boolean;
+    message: string;
+    latencyMs?: number;
+  } | null>(null);
 
   const [form, setForm] = useState<LLMSettings>({
     provider: 'deepseek',
@@ -79,6 +93,31 @@ export function SettingsPage() {
     }
   };
 
+  // 测试连接
+  const handleTest = async () => {
+    setTesting(true);
+    setTestResult(null);
+    setError(null);
+
+    try {
+      const res = await testLLMConfig(form);
+      setTestResult({
+        success: res.data.success,
+        message: res.data.message,
+        latencyMs: res.data.latencyMs,
+      });
+    } catch (err) {
+      const message =
+        (err as { response?: { data?: { error?: { message?: string } } } })?.response?.data?.error
+          ?.message ??
+        (err as Error)?.message ??
+        '测试连接失败';
+      setTestResult({ success: false, message });
+    } finally {
+      setTesting(false);
+    }
+  };
+
   if (loading) {
     return <LoadingSpinner text="加载配置..." />;
   }
@@ -88,8 +127,7 @@ export function SettingsPage() {
       {/* 标题 */}
       <div>
         <h1 className="text-2xl font-bold text-surface-900 dark:text-white">
-          <Settings className="mb-1 inline h-6 w-6" />
-          {' '}AI 模型设置
+          <Settings className="mb-1 inline h-6 w-6" /> AI 模型设置
         </h1>
         <p className="mt-1 text-sm text-surface-500 dark:text-surface-400">
           配置代码审查使用的 AI 模型和 API 密钥
@@ -189,7 +227,9 @@ export function SettingsPage() {
               <input
                 type="number"
                 value={form.temperature}
-                onChange={(e) => setForm((prev) => ({ ...prev, temperature: parseFloat(e.target.value) || 0.1 }))}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, temperature: parseFloat(e.target.value) || 0.1 }))
+                }
                 className="input text-sm"
                 min="0"
                 max="2"
@@ -201,7 +241,9 @@ export function SettingsPage() {
               <input
                 type="number"
                 value={form.maxTokens}
-                onChange={(e) => setForm((prev) => ({ ...prev, maxTokens: parseInt(e.target.value) || 4096 }))}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, maxTokens: parseInt(e.target.value) || 4096 }))
+                }
                 className="input text-sm"
                 min="256"
                 max="128000"
@@ -212,7 +254,9 @@ export function SettingsPage() {
               <input
                 type="number"
                 value={form.timeout}
-                onChange={(e) => setForm((prev) => ({ ...prev, timeout: parseInt(e.target.value) || 60000 }))}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, timeout: parseInt(e.target.value) || 60000 }))
+                }
                 className="input text-sm"
                 min="1000"
                 max="300000"
@@ -223,26 +267,64 @@ export function SettingsPage() {
       </div>
 
       {/* 操作按钮 */}
-      <div className="flex items-center gap-3">
-        <button
-          onClick={handleSave}
-          disabled={saving || !form.apiKey}
-          className="btn-primary"
-        >
-          {saving ? (
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-          ) : saved ? (
-            <Check className="h-4 w-4" />
-          ) : (
-            <Save className="h-4 w-4" />
-          )}
-          {saved ? '已保存' : '保存配置'}
-        </button>
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-3">
+          <button onClick={handleSave} disabled={saving || !form.apiKey} className="btn-primary">
+            {saving ? (
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+            ) : saved ? (
+              <Check className="h-4 w-4" />
+            ) : (
+              <Save className="h-4 w-4" />
+            )}
+            {saved ? '已保存' : '保存配置'}
+          </button>
 
-        {saved && (
-          <span className="text-sm text-emerald-600 dark:text-emerald-400 animate-fade-in">
-            ✅ 配置已保存
-          </span>
+          {/* 测试连接按钮 */}
+          <button
+            onClick={handleTest}
+            disabled={testing || !form.apiKey}
+            className="btn-secondary"
+            title="测试 API 是否可以正常调用"
+          >
+            {testing ? (
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-surface-500 border-t-transparent" />
+            ) : (
+              <Cable className="h-4 w-4" />
+            )}
+            {testing ? '测试中...' : '测试连接'}
+          </button>
+
+          {saved && (
+            <span className="text-sm text-emerald-600 dark:text-emerald-400 animate-fade-in">
+              ✅ 配置已保存
+            </span>
+          )}
+        </div>
+
+        {/* 测试结果 */}
+        {testResult && (
+          <div
+            className={`rounded-lg border p-3 text-sm animate-fade-in ${
+              testResult.success
+                ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400'
+                : 'border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400'
+            }`}
+          >
+            <div className="flex items-start gap-2">
+              {testResult.success ? (
+                <Check className="mt-0.5 h-4 w-4 flex-shrink-0" />
+              ) : (
+                <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+              )}
+              <div className="flex-1">
+                <p>{testResult.message}</p>
+                {testResult.latencyMs != null && (
+                  <p className="mt-1 text-xs opacity-75">延迟: {testResult.latencyMs}ms</p>
+                )}
+              </div>
+            </div>
+          </div>
         )}
       </div>
 

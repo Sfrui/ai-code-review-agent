@@ -3,6 +3,7 @@ import { ConfigModule as NestConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ReviewModule } from './modules/review/review.module';
 import { ConfigModule } from './modules/config/config.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ConfigModule } from './modules/config/config.module';
     // 业务模块
     ReviewModule,
     ConfigModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [],
