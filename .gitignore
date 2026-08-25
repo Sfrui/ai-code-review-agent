@@ -7,6 +7,7 @@ dist/
 build/
 .next/
 *.tsbuildinfo
+packages/shared/dist/
 
 # Environment
 .env

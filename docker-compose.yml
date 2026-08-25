@@ -1,8 +1,8 @@
 # ============================================================
-# 生产环境 Docker Compose
-# 前端: Vercel (静态部署)
+# 开发/简易部署 Docker Compose
 # 后端: Docker (Node.js)
-# 数据库: MongoDB Atlas (云数据库) 或本地 MongoDB
+# 数据库: 本地 MongoDB 或 MongoDB Atlas
+# 前端: Vercel 或其他静态托管
 # ============================================================
 
 version: '3.8'
