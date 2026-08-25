@@ -118,4 +118,10 @@ export class ReviewTaskRepository {
   async clearChatHistory(id: string): Promise<ReviewTaskDocument | null> {
     return this.model.findByIdAndUpdate(id, { $set: { chatHistory: [] } }, { new: true }).exec();
   }
+
+  /** 删除任务 */
+  async deleteById(id: string): Promise<boolean> {
+    const result = await this.model.findByIdAndDelete(id).exec();
+    return result !== null;
+  }
 }

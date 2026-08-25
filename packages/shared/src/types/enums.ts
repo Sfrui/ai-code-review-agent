@@ -55,11 +55,11 @@ export const ProgrammingLanguage = {
   RUST: 'rust',
   CSharp: 'csharp',
   CPP: 'cpp',
+  C: 'c',
   PHP: 'php',
   RUBY: 'ruby',
   SWIFT: 'swift',
   KOTLIN: 'kotlin',
   OTHER: 'other',
 } as const;
-export type ProgrammingLanguage =
-  (typeof ProgrammingLanguage)[keyof typeof ProgrammingLanguage];
+export type ProgrammingLanguage = (typeof ProgrammingLanguage)[keyof typeof ProgrammingLanguage];

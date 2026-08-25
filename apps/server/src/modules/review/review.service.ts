@@ -64,6 +64,15 @@ export class ReviewService {
     };
   }
 
+  /** 删除任务 */
+  async deleteTask(id: string): Promise<void> {
+    const deleted = await this.reviewTaskRepo.deleteById(id);
+    if (!deleted) {
+      throw new NotFoundException(`任务不存在: ${id}`);
+    }
+    this.logger.log(`Task ${id} deleted`);
+  }
+
   /**
    * 执行 AI 代码审查
    * 状态流转：pending → running → success/fail

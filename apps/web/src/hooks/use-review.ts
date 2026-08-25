@@ -4,6 +4,7 @@ import {
   fetchTaskById,
   fetchTaskList,
   fetchRunTask,
+  fetchDeleteTask,
 } from '@/api/review.api';
 
 // ============================================================
@@ -52,6 +53,18 @@ export function useRunTask() {
     mutationFn: fetchRunTask,
     onSuccess: (_, taskId) => {
       queryClient.invalidateQueries({ queryKey: ['reviewTask', taskId] });
+      queryClient.invalidateQueries({ queryKey: ['reviewTasks'] });
+    },
+  });
+}
+
+/** 删除审查任务 */
+export function useDeleteTask() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: fetchDeleteTask,
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reviewTasks'] });
     },
   });

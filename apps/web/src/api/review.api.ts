@@ -37,3 +37,8 @@ export function fetchTaskList(
 export function fetchRunTask(id: string): Promise<ApiResponse<ReviewTask>> {
   return api.post(`/review/task/${id}/run`).then((res) => res.data);
 }
+
+/** 删除审查任务 */
+export function fetchDeleteTask(id: string): Promise<ApiResponse<void>> {
+  return api.delete(`/review/task/${id}`).then((res) => res.data);
+}

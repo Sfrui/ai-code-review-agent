@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
   Body,
   Param,
   Query,
@@ -77,5 +78,16 @@ export class ReviewController {
   async getTask(@Param('id') id: string) {
     const task = await this.reviewService.getTaskById(id);
     return { success: true, data: task };
+  }
+
+  /**
+   * DELETE /api/v1/review/task/:id
+   * 删除审查任务
+   */
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  async deleteTask(@Param('id') id: string) {
+    await this.reviewService.deleteTask(id);
+    return { success: true, message: '任务已删除' };
   }
 }

@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { Upload, FileCode, X } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import { detectLanguage } from '@/lib/constants';
 
 // ============================================================
@@ -68,7 +68,7 @@ export function FileUploader({ onFileSelect, disabled = false }: FileUploaderPro
       <input
         ref={inputRef}
         type="file"
-        accept=".ts,.tsx,.js,.jsx,.py,.java,.go,.rs,.cs,.cpp,.cc,.php,.rb,.swift,.kt,.txt,.md"
+        accept=".ts,.tsx,.js,.jsx,.py,.java,.go,.rs,.cs,.cpp,.cc,.c,.h,.php,.rb,.swift,.kt,.txt,.md"
         className="hidden"
         onChange={handleChange}
         disabled={disabled}
@@ -78,7 +78,7 @@ export function FileUploader({ onFileSelect, disabled = false }: FileUploaderPro
         点击上传或拖拽代码文件
       </p>
       <p className="mt-1 text-xs text-surface-500 dark:text-surface-400">
-        支持 .ts .js .py .java .go .rs 等常见代码文件
+        支持 .ts .js .py .c .java .go .rs 等常见代码文件
       </p>
     </div>
   );
