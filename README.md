@@ -77,6 +77,7 @@
 
 ### :wrench: 便捷功能
 
+- 🗑️ **任务管理** — 支持删除审查记录，带确认弹窗防误删
 - 🔌 **测试连接** — 设置页面一键验证 API 是否可用
 - ⏱️ **延迟显示** — 显示 API 响应延迟
 - 🔒 **智能错误提示** — 自动识别 401/403/429/网络错误
@@ -173,11 +174,10 @@ pnpm dev
 ### Docker 部署
 
 ```bash
-# 一键部署
+# 一键部署后端 + MongoDB
 git clone https://github.com/Sfrui/ai-code-review-agent.git
 cd ai-code-review-agent
-chmod +x server-deploy.sh
-./server-deploy.sh
+docker compose up --build
 ```
 
 ## :gear: 支持的 AI 模型
@@ -207,6 +207,7 @@ ai-code-review-agent/
 │   │   └── src/
 │   │       ├── modules/
 │   │       │   ├── ai/            # 🤖 AI Agent 模块
+│   │       │   ├── chat/          # 💬 多轮对话模块
 │   │       │   ├── config/        # ⚙️ 配置模块
 │   │       │   ├── database/      # 🗄️ 数据库模块
 │   │       │   └── review/        # 📋 审查模块
@@ -219,8 +220,9 @@ ai-code-review-agent/
 │           ├── stores/            # 📦 状态管理
 │           └── hooks/             # 🪝 React Hooks
 ├── packages/shared/               # 📚 共享类型和 Schema
-├── docker-compose.prod.yml        # 🐳 Docker 编排
-├── deploy.sh                      # 🚀 部署脚本
+├── nginx/                         # 🌐 Nginx 反向代理配置
+├── docker-compose.yml             # 🐳 Docker 编排
+├── CLAUDE.md                      # 🤖 Claude Code 项目指引
 └── README.md                      # 📖 项目说明
 ```
 
@@ -259,6 +261,27 @@ ai-code-review-agent/
 5. 打开一个 Pull Request
 
 ## :bookmark_tabs: 更新日志
+
+### [v0.3.0] - 2026-08-25
+
+#### :tada: 新增
+
+- 审查任务删除功能（带确认弹窗防误删）
+- C 语言支持（语法审查、文件上传、扩展名映射）
+- AI 审查提示词适配多语言特性（C 语言指针/内存问题等）
+- Nginx 反向代理配置目录
+- CLAUDE.md 项目指引文件
+
+#### :wrench: 改进
+
+- HistoryPage 卡片布局优化，删除按钮 hover 显示
+- TailwindCSS 配置：新增 scale-in 动画，修复 require() 为 ESM import
+- Docker Compose 配置注释优化
+- .gitignore 补充 shared/dist 目录
+
+#### :wastebasket: 移除
+
+- 移除过时的 server-deploy.sh 部署脚本
 
 ### [v0.2.0] - 2026-08-05
 
