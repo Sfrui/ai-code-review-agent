@@ -1,35 +1,63 @@
 # ============================================================
-# 开发/简易部署 Docker Compose
-# 后端: Docker (Node.js)
-# 数据库: 本地 MongoDB 或 MongoDB Atlas
-# 前端: Vercel 或其他静态托管
+# 生产环境 Docker Compose
+# 架构: Nginx (80/443) → Server (3000) → MongoDB (27017)
 # ============================================================
 
-version: '3.8'
-
 services:
+  # ---- MongoDB 数据库 ----
+  mongodb:
+    image: mongo:7
+    container_name: ai-review-mongo
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:27017:27017' # 仅本地访问，不暴露公网
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: ai-code-review
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', 'db.adminCommand("ping")']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---- NestJS 后端 ----
   server:
     build:
       context: .
       dockerfile: apps/server/Dockerfile
-    ports:
-      - '${PORT:-3000}:3000'
+    container_name: ai-review-server
+    restart: unless-stopped
+    depends_on:
+      mongodb:
+        condition: service_healthy
     environment:
       - NODE_ENV=production
-      - MONGODB_URI=${MONGODB_URI}
-      - LLM_PROVIDER=${LLM_PROVIDER}
+      - MONGODB_URI=mongodb://mongodb:27017/ai-code-review
+      - PORT=3000
+      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost}
+      - LLM_PROVIDER=${LLM_PROVIDER:-openai-compat}
       - LLM_API_KEY=${LLM_API_KEY}
-      - LLM_MODEL=${LLM_MODEL}
-      - CORS_ORIGIN=${CORS_ORIGIN}
+      - LLM_MODEL=${LLM_MODEL:-LongCat-2.0}
+      - LLM_BASE_URL=${LLM_BASE_URL:-https://api.longcat.chat/openai}
+      - LLM_TEMPERATURE=${LLM_TEMPERATURE:-0.1}
+      - LLM_MAX_TOKENS=${LLM_MAX_TOKENS:-4096}
+      - LLM_TIMEOUT=${LLM_TIMEOUT:-60000}
+
+  # ---- Nginx 前端 + 反向代理 ----
+  nginx:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: ai-review-nginx
     restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx/ssl:/etc/nginx/ssl:ro # SSL 证书挂载
 
-  # 可选：本地 MongoDB（开发环境使用）
-  # mongodb:
-  #   image: mongo:7
-  #   ports:
-  #     - '27017:27017'
-  #   volumes:
-  #     - mongodb_data:/data/db
-
-# volumes:
-#   mongodb_data:
+volumes:
+  mongodb_data:
